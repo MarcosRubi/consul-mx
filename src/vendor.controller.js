@@ -1,29 +1,20 @@
-const chrome = require('chrome-aws-lambda')
 require('dotenv').config()
 
-let puppeteer
+const puppeteer = require('puppeteer')
 let emailEnviado = false
-
-process.env.AWS_LAMBDA_FUNCTION_VERSION
-  ? (puppeteer = require('puppeteer-core'))
-  : (puppeteer = require('puppeteer'))
 
 const Vendor = {
   getConsular: (req, res) => {
     (async () => {
-      let options = { headless: false }
-      if (process.env.AWS_LAMBDA_FUNCTION_VERSION) {
-        options = {
-          args: [...chrome.args, '--hide-scrollbars', '--disable-web-security'],
-          defaultViewport: chrome.defaultViewport,
-          executablePath: await chrome.executablePath,
-          headless: true,
-          ignoreHTTPSErrors: true
-        }
-      }
       try {
         // Abrimos una instancia del puppeteer y accedemos a la url
-        const browser = await puppeteer.launch(options)
+        const browser = await puppeteer.launch({
+          args: [
+            '--disable-setuid-sandbox',
+            '--no-sandbox'
+          ],
+          executablePath: process.env.NODE_ENV === 'production' ? process.env.PUPPETEER_EXECUTABLE_PATH : puppeteer.executablePath()
+        })
         let page = await browser.newPage()
 
         await page.goto('https://citas.sre.gob.mx/')
