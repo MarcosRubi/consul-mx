@@ -1,0 +1,34 @@
+{
+  "name": "api-shopscraping",
+  "version": "1.0.0",
+  "description": "API para obtener productos en diferentes tiendas online",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "author": "Marcos Rubi",
+  "license": "ISC",
+  "dependencies": {
+    "@sendgrid/mail": "^7.7.0",
+    "chrome-aws-lambda": "^6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "jsdom": "^20.0.1",
+    "morgan": "^1.10.0",
+    "puppeteer-core": "^6"
+  },
+  "engines": {
+    "node": "^14"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20",
+    "puppeteer": "^16.2.0",
+    "standard": "^17.0.0"
+  },
+  "eslintConfig": {
+    "extends": "standard"
+  }
+}
