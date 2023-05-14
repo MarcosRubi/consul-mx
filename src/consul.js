@@ -127,7 +127,7 @@ exports.handler = async function (req, res) {
       page.close()
       browser.close()
     }, 2000)
-  }, 10000)
+  }, 2100)
 
   getHeaders(res)
 
