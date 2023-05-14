@@ -2,7 +2,7 @@ const cors = require('cors')
 const express = require('express')
 const app = express()
 const morgan = require('morgan')
-const Vendor = require('./src/vendor.controller.js')
+const Vendor = require('./src/consul.js')
 require('dotenv').config()
 
 // Configuraciones
@@ -18,7 +18,7 @@ app.use(cors())
 
 // Routes
 app.get('/', (req, res) => res.status(200).send('Hello'))
-app.get('/consular/', Vendor.getConsular)
+app.get('/consular/', Vendor.handler)
 
 // Temporizador que llama a la ruta cada minuto
 setInterval(() => {
