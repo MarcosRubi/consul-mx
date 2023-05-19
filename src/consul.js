@@ -3,6 +3,12 @@ const chromium = require('chrome-aws-lambda')
 const puppeteer = require('puppeteer-core')
 let emailEnviado = false
 
+if (emailEnviado) {
+  setTimeout(() => {
+    emailEnviado = false
+  }, 1000 * 60 * 60)
+}
+
 const getHeaders = (res) => {
   res.setHeader('Access-Control-Allow-Credentials', true)
   res.setHeader('Access-Control-Allow-Origin', '*')

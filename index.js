@@ -27,7 +27,7 @@ setInterval(() => {
     .then(response => response.json())
     .then(data => console.log(data))
     .catch(error => console.error(error))
-}, 60 * 5000) // 1 minuto en milisegundos
+}, 60 * 5000 * 4) // 1 minuto en milisegundos
 
 // Iniciando el servidor
 app.listen(app.get('port'), () => {
