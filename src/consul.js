@@ -1,5 +1,5 @@
 require('dotenv').config()
-const chromium = require('chrome-aws-lambda')
+const chromium = require('@sparticuz/chromium')
 const puppeteer = require('puppeteer-core')
 let emailEnviado = false
 
@@ -35,13 +35,13 @@ const sendEmail = async () => {
           // },
           {
             email: process.env.EMAIL2 // Agrega otro correo electrónico
-          }
-          // {
+          },
+          {
           //   email: process.env.EMAIL3 // Agrega otro correo electrónico
           // },
           // {
           //   email: process.env.EMAIL4 // Agrega otro correo electrónico
-          // }
+          }
         ],
         subject: 'Consulado citas disponible' // Reemplaza con el asunto del correo electrónico
       }
@@ -74,10 +74,13 @@ const sendEmail = async () => {
 }
 
 exports.handler = async function (req, res) {
+  
   const browser = await puppeteer.launch({
-    args: chromium.args,
-    executablePath: process.env.CHROME_EXECUTABLE_PATH || await chromium.executablePath,
-    headless: true
+    args: [...chromium.args, "--proxy-server=173.208.208.42:19007"],
+    defaultViewport: chromium.defaultViewport,
+    executablePath: await chromium.executablePath || process.env.CHROME_EXECUTABLE_PATH,
+    headless: false,
+    ignoreHTTPSErrors: true,
   })
   let page = await browser.newPage()
 
@@ -128,6 +131,8 @@ exports.handler = async function (req, res) {
     if (!isTextPresent && !emailEnviado) {
       sendEmail()
       emailEnviado = true
+    } else {
+      console.log('No se debe enviar email')
     }
     setTimeout(() => {
       page.close()

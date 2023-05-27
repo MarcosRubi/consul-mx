@@ -6,28 +6,22 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index.js",
-    "start": "node index.js"
+    "start": "node index.js",
+    "zip": "npm run build && 7z a -r function.zip ./dist/*  node_modules/",
+    "sendToLambda": "npm run zip && aws s3 cp function.zip s3://chrome-aws && rm function.zip && aws lambda update-function-code --function-name puppeteer-examples --s3-bucket chrome-aws --s3-key function.zip"
   },
   "author": "Marcos Rubi",
   "license": "ISC",
   "dependencies": {
     "@sendgrid/mail": "^7.7.0",
-    "chrome-aws-lambda": "^10.1.0",
-    "puppeteer-core": "^10.2.0",
+    "@sparticuz/chromium": "^110.0.1",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "fetch": "^1.1.0",
-    "jsdom": "^20.0.1",
-    "morgan": "^1.10.0"
+    "puppeteer-core": "19.6"
   },
   "engines": {
     "node": "^14"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.20",
-    "puppeteer": "^16.2.0",
-    "standard": "^17.0.0"
   },
   "eslintConfig": {
     "extends": "standard"
